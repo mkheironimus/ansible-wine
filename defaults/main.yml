@@ -1,0 +1,25 @@
+---
+# Uninstall?
+wine_remove: false
+
+# Package management names
+wine_packages:
+  - winehq-stable
+  - tar
+  - xz-utils
+
+# Preinstall extras - versions need to match wine version
+wine_gecko_version: 2.47.2
+wine_gecko_dir: /opt/wine-stable/share/wine/gecko
+wine_gecko_url: "http://dl.winehq.org/wine/wine-gecko/{{ wine_gecko_version }}/wine-gecko-{{ wine_gecko_version }}-x86.tar.xz"
+wine_gecko_checksum: sha256:8fab46ea2110b2b0beed414e3ebb4e038a3da04900e7a28492ca3c3ccf9fea94
+wine_mono_version: 7.0.0
+wine_mono_dir: /opt/wine-stable/share/wine/mono
+wine_mono_url: "https://dl.winehq.org/wine/wine-mono/{{ wine_mono_version }}/wine-mono-{{ wine_mono_version }}-x86.tar.xz"
+wine_mono_checksum: sha256:2a047893f047b4f0f5b480f1947b7dda546cee3fec080beb105bf5759c563cd3
+
+# Apt repository configuration
+wine_apt_key_dir: /usr/local/share/apt
+wine_manage_apt_key_dir: true
+wine_apt_key_url: https://dl.winehq.org/wine-builds/winehq.key
+wine_apt_key_checksum: sha256:78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6

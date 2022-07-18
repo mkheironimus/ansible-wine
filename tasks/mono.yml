@@ -1,0 +1,37 @@
+---
+- name: Create wine-mono directory
+  file:
+    path: "{{ wine_mono_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: not wine_remove
+
+- name: Download wine-mono
+  ansible.builtin.get_url:
+    url: "{{ wine_mono_url }}"
+    dest: "{{ wine_mono_local }}"
+    checksum: "{{ wine_mono_checksum }}"
+    owner: root
+    group: root
+    mode: "0644"
+  register: wine_mono_dl
+  when: not wine_remove
+
+- name: Install wine-mono
+  ansible.builtin.command:
+    cmd: "tar xJf {{ wine_mono_local }}"
+    chdir: "{{ wine_mono_dir }}"
+    creates: "{{ wine_mono_dir }}/wine-mono-{{ wine_mono_version }}/bin/libmono-2.0-x86.dll"
+  when: not wine_remove and wine_mono_dl.changed
+
+#- name: Remove wine-mono
+#  file:
+#    path: "{{ wine_mono_i }}"
+#    state: absent
+#  when: wine_remove
+#  loop: 
+#    - "{{ wine_mono_local }}"
+#    - "{{ wine_mono_dir }}/wine-mono-{{ wine_mono_version }}"
+#  loop_control: { loop_var: wine_mono_i }

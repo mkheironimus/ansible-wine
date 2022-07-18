@@ -1,0 +1,43 @@
+---
+- name: OS-specific variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      paths:
+        - vars
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_lsb.id }}.yml"
+
+- name: OS-specific tasks
+  include_tasks: "{{ lookup('first_found', tasks) }}"
+  vars:
+    tasks:
+      paths:
+        - tasks
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_lsb.id }}.yml"
+
+- name: Install packages
+  package:
+    name: "{{ wine_packages }}"
+    state: "{{ 'absent' if wine_remove else 'present' }}"
+
+- name: Set up wine-gecko
+  include_tasks: gecko.yml
+  vars:
+    wine_gecko_local: "{{ wine_gecko_dir }}/wine-gecko-{{ wine_gecko_version }}-x86.tar.xz"
+  when: wine_gecko_version | length > 0
+
+- name: Set up wine-mono
+  include_tasks: mono.yml
+  vars:
+    wine_mono_local: "{{ wine_mono_dir }}/wine-mono-{{ wine_mono_version }}-x86.tar.xz"
+  when: wine_mono_version | length > 0

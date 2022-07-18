@@ -1,0 +1,53 @@
+---
+- name: Check if i386 multiarch is enabled
+  ansible.builtin.shell: "dpkg --print-foreign-architectures | grep i386"
+  register: wine_i386_enabled
+  changed_when: wine_i386_enabled.rc == 1
+  failed_when: wine_i386_enabled.rc > 1
+  check_mode: no
+
+- name: Enable i386 multiarch
+  ansible.builtin.command: "dpkg --add-architecture i386"
+  when: wine_i386_enabled.changed
+
+- name: Install apt transport
+  package:
+    name:
+      - apt-transport-https
+    state: present
+
+- name: Create apt key directory
+  file:
+    path: "{{ wine_apt_key_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: wine_manage_apt_key_dir and not wine_remove
+
+- name: Add apt keys
+  ansible.builtin.get_url:
+    url: "{{ wine_apt_key_url }}"
+    dest: "{{ wine_apt_key_dir }}/winehq.key"
+    checksum: "{{ wine_apt_key_checksum }}"
+    owner: root
+    group: root
+    mode: "0644"
+  when: not wine_remove
+
+- name: Add apt repositories
+  template:
+    src: winehq.list.j2
+    dest: /etc/apt/sources.list.d/winehq.list
+    owner: root
+    group: root
+    mode: "0644"
+  vars:
+    apt_key_dir: "{{ wine_apt_key_dir }}"
+  register: wine_apt_added
+  when: not wine_remove
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+  when: wine_apt_added.changed and not wine_remove

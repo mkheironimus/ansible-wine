@@ -1,0 +1,37 @@
+---
+- name: Create wine-gecko directory
+  file:
+    path: "{{ wine_gecko_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: not wine_remove
+
+- name: Download wine-gecko
+  ansible.builtin.get_url:
+    url: "{{ wine_gecko_url }}"
+    dest: "{{ wine_gecko_local }}"
+    checksum: "{{ wine_gecko_checksum }}"
+    owner: root
+    group: root
+    mode: "0644"
+  register: wine_gecko_dl
+  when: not wine_remove
+
+- name: Install wine-gecko
+  ansible.builtin.command:
+    chdir: "{{ wine_gecko_dir }}"
+    cmd: "tar xJf {{ wine_gecko_local }}"
+    creates: "{{ wine_gecko_dir }}/wine-gecko-{{ wine_gecko_version }}-x86/xul.dll"
+  when: not wine_remove and wine_gecko_dl.changed
+
+#- name: Remove wine-gecko
+#  file:
+#    path: "{{ wine_gecko_i }}"
+#    state: absent
+#  when: wine_remove
+#  loop:
+#    - "{{ wine_gecko_local }}"
+#    - "{{ wine_gecko_dir }}/wine-gecko-{{ wine_gecko_version }}-x86"
+#  loop_control: { loop_var: wine_gecko_i }

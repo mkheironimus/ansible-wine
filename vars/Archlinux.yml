@@ -1,0 +1,9 @@
+---
+wine_packages:
+  - wine
+  - wine-gecko
+  - wine-mono
+  - tar
+  - xz
+wine_gecko_version: ""
+wine_mono_version: ""
