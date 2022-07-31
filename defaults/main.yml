@@ -17,6 +17,10 @@ wine_mono_version: 7.0.0
 wine_mono_dir: /opt/wine-stable/share/wine/mono
 wine_mono_url: "https://dl.winehq.org/wine/wine-mono/{{ wine_mono_version }}/wine-mono-{{ wine_mono_version }}-x86.tar.xz"
 wine_mono_checksum: sha256:2a047893f047b4f0f5b480f1947b7dda546cee3fec080beb105bf5759c563cd3
+wine_tricks_version: "20220411"
+wine_tricks_dir: /opt/wine-stable
+wine_tricks_url: "https://raw.githubusercontent.com/Winetricks/winetricks/{{ wine_tricks_version }}/src/winetricks"
+wine_tricks_checksum: sha256:69856050cfe9d97902dfd68c1ad42a10a4be0fe76660744126d7e3ed75610495
 
 # Apt repository configuration
 wine_apt_key_dir: /usr/local/share/apt

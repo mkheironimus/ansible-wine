@@ -41,3 +41,13 @@
   vars:
     wine_mono_local: "{{ wine_mono_dir }}/wine-mono-{{ wine_mono_version }}-x86.tar.xz"
   when: wine_mono_version | length > 0
+
+- name: Add winetricks
+  ansible.builtin.get_url:
+    url: "{{ wine_tricks_url }}"
+    dest: "{{ wine_tricks_dir }}/winetricks"
+    checksum: "{{ wine_tricks_checksum }}"
+    owner: root
+    group: root
+    mode: "0755"
+  when: wine_mono_version | length > 0 and not wine_remove
