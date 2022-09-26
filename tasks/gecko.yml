@@ -1,6 +1,6 @@
 ---
 - name: Create wine-gecko directory
-  file:
+  ansible.builtin.file:
     path: "{{ wine_gecko_dir }}"
     state: directory
     owner: root
@@ -27,7 +27,7 @@
   when: not wine_remove and wine_gecko_dl.changed
 
 #- name: Remove wine-gecko
-#  file:
+#  ansible.builtin.file:
 #    path: "{{ wine_gecko_i }}"
 #    state: absent
 #  when: wine_remove

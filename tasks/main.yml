@@ -26,7 +26,7 @@
         - "{{ ansible_lsb.id }}.yml"
 
 - name: Install packages
-  package:
+  ansible.builtin.package:
     name: "{{ wine_packages }}"
     state: "{{ 'absent' if wine_remove else 'present' }}"
 

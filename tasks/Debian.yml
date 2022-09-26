@@ -11,13 +11,13 @@
   when: wine_i386_enabled.changed
 
 - name: Install apt transport
-  package:
+  ansible.builtin.package:
     name:
       - apt-transport-https
     state: present
 
 - name: Create apt key directory
-  file:
+  ansible.builtin.file:
     path: "{{ wine_apt_key_dir }}"
     state: directory
     owner: root
@@ -36,7 +36,7 @@
   when: not wine_remove
 
 - name: Add apt repositories
-  template:
+  ansible.builtin.template:
     src: winehq.list.j2
     dest: /etc/apt/sources.list.d/winehq.list
     owner: root

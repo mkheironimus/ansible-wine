@@ -1,6 +1,6 @@
 ---
 - name: Create wine-mono directory
-  file:
+  ansible.builtin.file:
     path: "{{ wine_mono_dir }}"
     state: directory
     owner: root
@@ -27,7 +27,7 @@
   when: not wine_remove and wine_mono_dl.changed
 
 #- name: Remove wine-mono
-#  file:
+#  ansible.builtin.file:
 #    path: "{{ wine_mono_i }}"
 #    state: absent
 #  when: wine_remove
