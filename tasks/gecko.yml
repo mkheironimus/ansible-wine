@@ -26,6 +26,15 @@
     creates: "{{ wine_gecko_dir }}/wine-gecko-{{ wine_gecko_version }}-x86/xul.dll"
   when: not wine_remove and wine_gecko_dl.changed
 
+- name: Set wine-gecko permissions
+  ansible.builtin.file:
+    path: "{{ wine_gecko_dir }}"
+    state: directory
+    recurse: true
+    owner: root
+    group: root
+  when: not wine_remove
+
 #- name: Remove wine-gecko
 #  ansible.builtin.file:
 #    path: "{{ wine_gecko_i }}"

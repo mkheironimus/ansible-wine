@@ -26,6 +26,15 @@
     creates: "{{ wine_mono_dir }}/wine-mono-{{ wine_mono_version }}/bin/libmono-2.0-x86.dll"
   when: not wine_remove and wine_mono_dl.changed
 
+- name: Set wine-mono permissions
+  ansible.builtin.file:
+    path: "{{ wine_mono_dir }}"
+    state: directory
+    recurse: true
+    owner: root
+    group: root
+  when: not wine_remove
+
 #- name: Remove wine-mono
 #  ansible.builtin.file:
 #    path: "{{ wine_mono_i }}"

@@ -9,15 +9,15 @@ wine_packages:
   - xz-utils
 
 # Preinstall extras - versions need to match wine version
-wine_gecko_version: 2.47.2
+wine_gecko_version: 2.47.4
 wine_gecko_dir: /opt/wine-stable/share/wine/gecko
 wine_gecko_url: "http://dl.winehq.org/wine/wine-gecko/{{ wine_gecko_version }}/wine-gecko-{{ wine_gecko_version }}-x86.tar.xz"
-wine_gecko_checksum: sha256:8fab46ea2110b2b0beed414e3ebb4e038a3da04900e7a28492ca3c3ccf9fea94
-wine_mono_version: 7.0.0
+wine_gecko_checksum: sha256:2cfc8d5c948602e21eff8a78613e1826f2d033df9672cace87fed56e8310afb6
+wine_mono_version: 8.1.0
 wine_mono_dir: /opt/wine-stable/share/wine/mono
 wine_mono_url: "https://dl.winehq.org/wine/wine-mono/{{ wine_mono_version }}/wine-mono-{{ wine_mono_version }}-x86.tar.xz"
-wine_mono_checksum: sha256:2a047893f047b4f0f5b480f1947b7dda546cee3fec080beb105bf5759c563cd3
-wine_tricks_version: "20220411"
+wine_mono_checksum: sha256:4e3e8a40729e4c9e3e9e651cebe4f1aed8f9a4d22e991e6cd24608687f0eedd4
+wine_tricks_version: "20240105"
 wine_tricks_dir: /opt/wine-stable
 wine_tricks_url: "https://raw.githubusercontent.com/Winetricks/winetricks/{{ wine_tricks_version }}/src/winetricks"
 wine_tricks_checksum: sha256:69856050cfe9d97902dfd68c1ad42a10a4be0fe76660744126d7e3ed75610495
